@@ -1,11 +1,12 @@
 const productService = require('../services/productService');
+const logger = require('../logs/logger');
 
 exports.registerProduct = async (req, res, next) => {
     try {
         const product = await productService.registerProduct(req.body);
         res.json(product);
     } catch (error) {
-        console.error('Error creating product:', error);
+        logger.error('Error creating product:', error);
         next(error);
     }
 };
@@ -18,6 +19,7 @@ exports.updateProductCategory = async (req, res, next) => {
         const updatedProduct = await productService.updateProductCategory(productId, category);
         res.json(updatedProduct);
     } catch (error) {
+        logger.error('Error updating product category:', error);
         next(error);
     }
 };
@@ -29,6 +31,7 @@ exports.filterProducts = async (req, res, next) => {
         const filteredProducts = await productService.filterProducts(name, category);
         res.json(filteredProducts);
     } catch (error) {
+        logger.error('Error filtering products:', error);
         next(error);
     }
 };
@@ -41,6 +44,7 @@ exports.updateProductData = async (req, res, next) => {
         const updatedProduct = await productService.updateProductData(productId, updatedData);
         res.json(updatedProduct);
     } catch (error) {
+        logger.error('Error updating product data:', error);
         next(error);
     }
 };
@@ -52,6 +56,7 @@ exports.deleteProduct = async (req, res, next) => {
         await productService.deleteProduct(productId);
         res.json({ message: 'Product deleted successfully' });
     } catch (error) {
+        logger.error('Error deleting product:', error);
         next(error);
     }
 };
